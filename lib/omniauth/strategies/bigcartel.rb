@@ -5,11 +5,12 @@ module OmniAuth
     class Bigcartel < OmniAuth::Strategies::OAuth2
       option :name, :bigcartel
 
-      option :client_options, { 
+      option :client_options, {
         site: 'https://api.bigcartel.com',
         authorize_url: 'https://my.bigcartel.com/oauth/authorize',
         request_token_url: 'https://api.bigcartel.com/oauth/request_token',
         access_token_url: 'https://api.bigcartel.com/oauth/token',
+        auth_scheme: :request_body
       }
 
       uid { raw_info['id'] }
@@ -30,7 +31,7 @@ module OmniAuth
 
       def raw_info
         @raw_info ||= MultiJson.decode(access_token.get("/account").body)
-      end    
+      end
     end
   end
 end
